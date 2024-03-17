@@ -1,7 +1,7 @@
-import { Outlet } from "react-router-dom";
-import Footer from "./Footer";
-import Header from "./Header";
-import Banner from "./Banner";
+import { Outlet } from 'react-router-dom';
+import Footer from './Footer';
+import Header from './Header';
+import Banner from './Banner';
 
 const Layout = () => {
   return (

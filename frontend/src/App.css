@@ -305,3 +305,30 @@ h2, .h2 {
   background-color: #727e86;
   border-color: #727e86;
 }
+
+/* search expander fix */
+.header-controls-pics {
+  display: flex;
+  justify-content: space-between;
+  max-width: 280px;
+  margin-left: auto;
+
+  position: absolute;
+  right: 65px;
+  top: calc(50% - 19px);
+}
+
+.header-controls-search-form {
+  display: flex;
+  padding-right: 6px;
+}
+
+.header-controls-search {
+  margin-right: 20px;
+}
+
+.header-controls-search-form .header-controls-search {
+  width: 40px;
+  margin: 0 0;  
+  top: 3px;
+}

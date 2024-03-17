@@ -1,7 +1,7 @@
-import { Link } from 'react-router-dom'
-import { IProduct } from '../models/Product'
+import { Link } from 'react-router-dom';
+import { IProduct } from '../models/Product';
 
-const ProductCard = ({id, category, title, price, images}: IProduct) => {
+const ProductCard = ({ id, title, price, images }: IProduct) => {
   const [src] = images;
   return (
     <div className="card catalog-item-card">
@@ -9,10 +9,12 @@ const ProductCard = ({id, category, title, price, images}: IProduct) => {
       <div className="card-body">
         <p className="card-text">{title}</p>
         <p className="card-text">{price.toLocaleString('ru-RU')} руб.</p>
-        <Link to={`/products/${id}.html`} className="btn btn-outline-primary">Заказать</Link>
+        <Link to={`/products/${id}.html`} className="btn btn-outline-primary">
+          Заказать
+        </Link>
       </div>
     </div>
-  )
+  );
 };
 
 export default ProductCard;

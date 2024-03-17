@@ -1,49 +1,30 @@
-import { useEffect, useState } from 'react';
 import Preloader from './Preloader';
-import { IProduct } from '../models/Product';
-import ProductCard from './ProductCard';
+import ProductCards from './ProductCards';
+import ErrorMessage from './ErrorMessage';
+import { useGetTopSalesQuery } from '../redux/services/api';
 
 const TopSales = () => {
-  const [topSales, setTopSales] = useState<IProduct[]>([]);
-  const [isLoading, setLoading] = useState(false);
+  const {
+    data: topSales = [],
+    isLoading,
+    isFetching,
+    isError,
+    error,
+    refetch,
+  } = useGetTopSalesQuery();
 
-  useEffect(() => {
-    setLoading(true);
-    fetch(import.meta.env.VITE_API_URL+'top-sales')
-      .then(res => res.json())
-      .then(jsonData => {
-        setTopSales(jsonData);
-      })
-      .catch(err => { throw err })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
-
-    return (
+  return (
     <section className="top-sales">
       <h2 className="text-center">Хиты продаж!</h2>
-      { isLoading && <Preloader /> }
-      { !isLoading &&
+      {isError && <ErrorMessage error={error} reload={refetch} />}
+      {!isError && (isLoading || isFetching) && <Preloader />}
+      {!isError && !isLoading && !isFetching && topSales.length && (
         <section className="catalog">
-          <div className="row">
-            {topSales.map(({id, category, title, price, images}: IProduct) => 
-                <div key={id} className="col-4">
-                  <ProductCard 
-                    id={id} 
-                    category={category} 
-                    title={title} 
-                    price={price}
-                    images={images} 
-                  />
-                </div>
-              )
-            }
-          </div>
+          <ProductCards products={topSales} />
         </section>
-      } 
+      )}
     </section>
-  )
+  );
 };
 
 export default TopSales;

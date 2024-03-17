@@ -1,5 +1,5 @@
-import Products from "../components/Products";
-import TopSales from "../components/TopSales";
+import Products from '../components/Products';
+import TopSales from '../components/TopSales';
 
 const Home = () => {
   return (

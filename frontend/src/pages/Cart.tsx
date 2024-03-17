@@ -18,15 +18,23 @@ const Cart = () => {
           <tbody>
             <tr>
               <td scope="row">1</td>
-              <td><a href="/products/1.html">Босоножки 'MYER'</a></td>
+              <td>
+                <a href="/products/1.html">Босоножки 'MYER'</a>
+              </td>
               <td>18 US</td>
               <td>1</td>
               <td>34 000 руб.</td>
               <td>34 000 руб.</td>
-              <td><button className="btn btn-outline-danger btn-sm">Удалить</button></td>
+              <td>
+                <button className="btn btn-outline-danger btn-sm">
+                  Удалить
+                </button>
+              </td>
             </tr>
             <tr>
-              <td colSpan={5} className="text-right">Общая стоимость</td>
+              <td colSpan={5} className="text-right">
+                Общая стоимость
+              </td>
               <td>34 000 руб.</td>
             </tr>
           </tbody>
@@ -34,26 +42,42 @@ const Cart = () => {
       </section>
       <section className="order">
         <h2 className="text-center">Оформить заказ</h2>
-        <div className="card" style={{maxWidth: "30rem", margin: "0 auto"}}>
+        <div className="card" style={{ maxWidth: '30rem', margin: '0 auto' }}>
           <form className="card-body">
             <div className="form-group">
               <label htmlFor="phone">Телефон</label>
-              <input className="form-control" id="phone" placeholder="Ваш телефон" />
+              <input
+                className="form-control"
+                id="phone"
+                placeholder="Ваш телефон"
+              />
             </div>
             <div className="form-group">
               <label htmlFor="address">Адрес доставки</label>
-              <input className="form-control" id="address" placeholder="Адрес доставки" />
+              <input
+                className="form-control"
+                id="address"
+                placeholder="Адрес доставки"
+              />
             </div>
             <div className="form-group form-check">
-              <input type="checkbox" className="form-check-input" id="agreement" />
-              <label className="form-check-label" htmlFor="agreement">Согласен с правилами доставки</label>
+              <input
+                type="checkbox"
+                className="form-check-input"
+                id="agreement"
+              />
+              <label className="form-check-label" htmlFor="agreement">
+                Согласен с правилами доставки
+              </label>
             </div>
-            <button type="submit" className="btn btn-outline-secondary">Оформить</button>
+            <button type="submit" className="btn btn-outline-secondary">
+              Оформить
+            </button>
           </form>
         </div>
       </section>
     </>
-  )
-}
+  );
+};
 
-export default Cart
+export default Cart;

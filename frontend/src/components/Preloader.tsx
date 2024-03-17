@@ -6,7 +6,7 @@ const Preloader = () => {
       <span></span>
       <span></span>
     </div>
-  )
-}
+  );
+};
 
-export default Preloader
+export default Preloader;

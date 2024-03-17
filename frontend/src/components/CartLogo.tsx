@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 const CartLogo = () => {
   return (
@@ -6,9 +6,9 @@ const CartLogo = () => {
       <div className="header-controls-pic header-controls-cart">
         <div className="header-controls-cart-full">1</div>
         <div className="header-controls-cart-menu"></div>
-      </div>                    
+      </div>
     </Link>
-  )
+  );
 };
 
 export default CartLogo;

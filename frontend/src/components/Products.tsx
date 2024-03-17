@@ -1,52 +1,66 @@
-import { useEffect, useState } from "react";
-import Preloader from "./Preloader";
-import { IProduct } from "../models/Product";
-import ProductCard from "./ProductCard";
-import Categories from "./Categories";
-import ProductsMore from "./ProductsMore";
+import Categories from './Categories';
+import ProductsPage from './ProductsPage';
+import ProductsMore from './ProductsMore';
+import SearchProducts from './SearchProducts';
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import { selectLoadButton } from '../redux/slices/loadButtonSlice';
+import { selectPages } from '../redux/slices/pagesSlice';
+import { useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import {
+  selectQueryParams,
+  setQueryParams,
+} from '../redux/slices/queryParamsSlice';
 
-const Products = () => {
-  const [products, setProducts] = useState<IProduct[]>([]);
-  const [isLoading, setLoading] = useState(false);
+interface IProductsProps {
+  showSearch?: boolean;
+}
+const Products = ({showSearch}: IProductsProps) => {
+  const { isVisible: isLoadButtonVisible, isDisabled: isLoadButtonDisabled } =
+    useAppSelector(selectLoadButton);
+  const pages = useAppSelector(selectPages);
+  const dispatch = useAppDispatch();
+  const [searchParams] = useSearchParams();
+  const { categoryId, offset, searchTerm } = useAppSelector(selectQueryParams);
 
   useEffect(() => {
-    setLoading(true);
-    fetch(import.meta.env.VITE_API_URL+'items')
-      .then(res => res.json())
-      .then(jsonData => {
-        setProducts(jsonData);
-      })
-      .catch(err => { throw err })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
+    const queryParam = { categoryId, offset, searchTerm };
+    const categoryParam = parseInt(searchParams.get('category') || '0');
+    const searchParam = searchParams.get('q') || '';
+
+    let isNeedUpdate = false;
+
+    if (categoryParam >= 0 && categoryParam != categoryId) {
+      queryParam.categoryId = categoryParam;
+      isNeedUpdate = true;
+    }
+
+    if (searchParam != '') {
+      queryParam.searchTerm = searchParam;
+      isNeedUpdate = true;
+    }
+
+    if (isNeedUpdate) {
+      dispatch(setQueryParams(queryParam));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
 
   return (
-    <section className="catalog">
-      <h2 className="text-center">Каталог</h2>
-      { isLoading && <Preloader /> }
-      { !isLoading && <>
-          <Categories />
-          <div className="row">
-            {products.map(({id, category, title, price, images}: IProduct) => 
-                <div key={id} className="col-4">
-                  <ProductCard 
-                    id={id} 
-                    category={category} 
-                    title={title} 
-                    price={price}
-                    images={images} 
-                  />
-                </div>
-              )
-            }
-          </div>
-          <ProductsMore />
-        </>
-      }
-    </section>
-  )
+    <>
+      <section className="catalog">
+        <h2 className="text-center">Каталог</h2>
+        { showSearch && <SearchProducts /> }
+        <Categories />
+        {pages.map(({ id, offset }) => (
+          <ProductsPage key={id} offset={offset} />
+        ))}
+        {isLoadButtonVisible && (
+          <ProductsMore disabled={isLoadButtonDisabled} />
+        )}
+      </section>
+    </>
+  );
 };
 
 export default Products;
